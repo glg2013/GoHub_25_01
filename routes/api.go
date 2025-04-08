@@ -2,9 +2,9 @@
 package routes
 
 import (
-	"net/http"
-
+	"GoHub_25_01/app/http/controllers/api/v1/auth"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // RegisterAPIRoutes 注册网页相关路由
@@ -19,5 +19,12 @@ func RegisterAPIRoutes(r *gin.Engine) {
 				"Hello": "World!",
 			})
 		})
+
+		authGroup := v1.Group("/auth")
+		{
+			suc := new(auth.SignUpController)
+			// 判断手机是否已注册
+			authGroup.POST("/signup/phone/exist", suc.IsPhoneExist)
+		}
 	}
 }

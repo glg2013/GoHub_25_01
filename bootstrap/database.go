@@ -1,6 +1,7 @@
 package bootstrap
 
 import (
+	"GoHub_25_01/app/models/user"
 	"GoHub_25_01/pkg/config"
 	"GoHub_25_01/pkg/database"
 	"errors"
@@ -48,4 +49,7 @@ func SetupDB() {
 	database.SQLDB.SetMaxIdleConns(config.GetInt("database.mysql.max_idle_connections"))
 	// 设置每个链接的过期时间
 	database.SQLDB.SetConnMaxLifetime(time.Duration(config.GetInt("database.mysql.max_life_seconds")) * time.Second)
+
+	// 数据库迁移
+	database.DB.AutoMigrate(&user.User{})
 }
