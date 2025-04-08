@@ -2,11 +2,26 @@ package main
 
 import (
 	"GoHub_25_01/bootstrap"
+	config2 "GoHub_25_01/config"
+	"GoHub_25_01/pkg/config"
+	"flag"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
+func init() {
+	// 加载 config 目录下的配置信息
+	config2.Initialize()
+}
+
 func main() {
+
+	// 配置初始化，依赖命令行 --env 参数
+	var env string
+	flag.StringVar(&env, "env", "", "加载 .env 文件，如 --env=testing 加载的是 .evn.testing 文件")
+	flag.Parse()
+	config.InitConfig(env)
+
 	// new 一个 Gin Engine 实例
 	router := gin.New()
 
